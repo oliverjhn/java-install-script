@@ -17,16 +17,17 @@ Set-Location -Path "$env:USERPROFILE\Downloads"
 
 # Install Zulu OpenJDK
 $installCommand = "msiexec /i $downloadPath INSTALLDIR=$env:LOCALAPPDATA\Programs\Zulu\zulu-21\ MSIINSTALLPERUSER=1 ADDLOCAL=ZuluInstallation REMOVE=FeatureEnvironment,FeatureJavaHome,FeatureOracleJavaSoft"
-$process = Start-Process -FilePath "msiexec.exe" -ArgumentList $installCommand.Split() -PassThru -Wait
+Invoke-Expression -Command $installCommand
 
 # Set the path of javaw.exe to clipboard
 $javawPath = "$env:LOCALAPPDATA\Programs\Zulu\zulu-21\bin\javaw.exe"
 $javawPath | Set-Clipboard
+    Write-Host "$javawPath copied to clipboard"
 
-if (Test-Path $javawPath) {
-    Write-Host "$javawPath copied to clipboard"
-    Write-Host "The file was found at the expected location."
-} else {
-    Write-Host "$javawPath copied to clipboard"
-    Write-Host "Warning: javaw.exe was not found at the expected location. Please check the installation."
-}
+# if (Test-Path $javawPath) {
+#     Write-Host "$javawPath copied to clipboard"
+#     Write-Host "The file was found at the expected location."
+# } else {
+#     Write-Host "$javawPath copied to clipboard"
+#     Write-Host "Warning: javaw.exe was not found at the expected location. Please check the installation."
+# }
